@@ -1,0 +1,6 @@
+[submodule "api/account"]
+	path = api/account
+	url = https://github.com/Microservice-Alex-Carlos-Lucas/account.git
+[submodule "api/account-service"]
+	path = api/account-service
+	url = https://github.com/Microservice-Alex-Carlos-Lucas/account-service.git
