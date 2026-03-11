@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <script src="store.js"></script>
+        <meta charset="UTF-8">
+        <title>Microservices</title>
+    </head>
+    <body>
+        <h2>Store Site</h2>
+        <div>
+            <a href="login.html">Login</a> |
+            <a href="register.html">Register</a>
+            <a href="accounts.html">Accounts</a>
+        </div>
+
+        <div>
+            <h3>Register</h3>
+            <form action="http://localhost:8080/accounts" method="post">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name"><br>
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email"><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password"><br><br>
+                <input type="button" value="Submit" onClick="javascript:register()">
+            </form>
+        </div>
+    </body>
+</html>

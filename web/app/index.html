@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account Service — Tester</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #252836;
+      --border: #2e3248;
+      --accent: #6c63ff;
+      --accent-hover: #5a52e0;
+      --success: #3ecf8e;
+      --danger: #f87171;
+      --warn: #fbbf24;
+      --text: #e2e8f0;
+      --muted: #6b7280;
+      --radius: 10px;
+      --font: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--surface);
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    header h1 { font-size: 18px; font-weight: 600; }
+    header p  { font-size: 13px; color: var(--muted); }
+
+    #status-bar {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    #status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+      transition: background .3s;
+    }
+    #status-dot.up   { background: var(--success); }
+    #status-dot.down { background: var(--danger); }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 0;
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--border);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+      padding: 0 4px;
+    }
+
+    .endpoint-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+      transition: background .15s, border-color .15s;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+    }
+
+    .endpoint-btn:hover { background: var(--surface2); }
+    .endpoint-btn.active { background: var(--surface2); border-color: var(--accent); }
+
+    .method-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      min-width: 46px;
+      text-align: center;
+    }
+
+    .GET    { background: #1a3a2e; color: var(--success); }
+    .POST   { background: #1e2a4a; color: #93c5fd; }
+    .DELETE { background: #3a1a1a; color: var(--danger); }
+
+    .content {
+      padding: 32px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-header h2 { font-size: 15px; font-weight: 600; }
+    .panel-header p  { font-size: 13px; color: var(--muted); }
+    .panel-body      { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    input, textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color .2s;
+      width: 100%;
+    }
+
+    input:focus, textarea:focus { border-color: var(--accent); }
+
+    textarea { resize: vertical; min-height: 100px; }
+
+    .config-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .config-row .field { flex: 1; }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      font-family: var(--font);
+      transition: background .15s, transform .1s;
+      white-space: nowrap;
+    }
+
+    .btn:active { transform: scale(.97); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-danger  { background: #7f1d1d; color: var(--danger); }
+    .btn-danger:hover  { background: #991b1b; }
+
+    .response-panel { display: none; }
+    .response-panel.show { display: block; }
+
+    .response-header {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    .status-pill {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .s2xx { background: #1a3a2e; color: var(--success); }
+    .s4xx { background: #3a1a1a; color: var(--danger); }
+    .s5xx { background: #3a2a10; color: var(--warn); }
+
+    .response-body {
+      padding: 16px 20px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-all;
+      color: #a5f3a5;
+      background: #0a0e14;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    /* accounts table */
+    .accounts-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .accounts-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .accounts-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+
+    .accounts-table tr:last-child td { border-bottom: none; }
+    .accounts-table tr:hover td { background: var(--surface2); }
+
+    .del-btn {
+      padding: 4px 10px;
+      background: #7f1d1d55;
+      border: 1px solid #f8717155;
+      color: var(--danger);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: var(--font);
+      transition: background .15s;
+    }
+    .del-btn:hover { background: #7f1d1d; }
+
+    .empty-state {
+      padding: 32px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .loading { opacity: .5; font-size: 13px; padding: 20px; text-align: center; }
+
+    @media (max-width: 768px) {
+      main { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚙</div>
+  <div>
+    <h1>Account Service</h1>
+    <p>Microservice tester</p>
+  </div>
+  <div id="status-bar">
+    <div id="status-dot"></div>
+    <span id="status-text">verificando...</span>
+  </div>
+</header>
+
+<main>
+  <nav class="sidebar">
+    <div class="sidebar-title">Endpoints</div>
+    <button class="endpoint-btn active" onclick="show('health')">
+      <span class="method-badge GET">GET</span> /accounts/health-check
+    </button>
+    <button class="endpoint-btn" onclick="show('list')">
+      <span class="method-badge GET">GET</span> /accounts
+    </button>
+    <button class="endpoint-btn" onclick="show('findById')">
+      <span class="method-badge GET">GET</span> /accounts/{id}
+    </button>
+    <button class="endpoint-btn" onclick="show('create')">
+      <span class="method-badge POST">POST</span> /accounts
+    </button>
+    <button class="endpoint-btn" onclick="show('delete')">
+      <span class="method-badge DELETE">DELETE</span> /accounts/{id}
+    </button>
+  </nav>
+
+  <div class="content">
+
+    <!-- Config -->
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <h2>Configuracao</h2>
+          <p>URL base do servico</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="config-row">
+          <div class="field">
+            <label>Base URL</label>
+            <input id="base-url" type="text" value="http://localhost:8080" placeholder="http://localhost:8080" />
+          </div>
+          <button class="btn btn-primary" onclick="pingHealth()">Ping</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Health Check -->
+    <div class="panel" id="panel-health">
+      <div class="panel-header">
+        <span class="method-badge GET">GET</span>
+        <div>
+          <h2>/accounts/health-check</h2>
+          <p>Verifica se o servico esta no ar</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <button class="btn btn-primary" onclick="doHealthCheck()">Executar</button>
+      </div>
+      <div class="response-panel" id="resp-health">
+        <div class="response-header">
+          <span>Resposta</span>
+          <span class="status-pill" id="status-health"></span>
+        </div>
+        <div class="response-body" id="body-health"></div>
+      </div>
+    </div>
+
+    <!-- List All -->
+    <div class="panel" id="panel-list" style="display:none">
+      <div class="panel-header">
+        <span class="method-badge GET">GET</span>
+        <div>
+          <h2>/accounts</h2>
+          <p>Lista todas as contas</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <button class="btn btn-primary" onclick="doListAll()">Executar</button>
+      </div>
+      <div class="response-panel" id="resp-list">
+        <div class="response-header">
+          <span>Resposta</span>
+          <span class="status-pill" id="status-list"></span>
+        </div>
+        <div id="table-list"></div>
+        <div class="response-body" id="body-list"></div>
+      </div>
+    </div>
+
+    <!-- Find By Id -->
+    <div class="panel" id="panel-findById" style="display:none">
+      <div class="panel-header">
+        <span class="method-badge GET">GET</span>
+        <div>
+          <h2>/accounts/{id}</h2>
+          <p>Busca uma conta pelo ID</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="field">
+          <label>ID</label>
+          <input id="find-id" type="text" placeholder="uuid da conta" />
+        </div>
+        <button class="btn btn-primary" onclick="doFindById()">Executar</button>
+      </div>
+      <div class="response-panel" id="resp-findById">
+        <div class="response-header">
+          <span>Resposta</span>
+          <span class="status-pill" id="status-findById"></span>
+        </div>
+        <div class="response-body" id="body-findById"></div>
+      </div>
+    </div>
+
+    <!-- Create -->
+    <div class="panel" id="panel-create" style="display:none">
+      <div class="panel-header">
+        <span class="method-badge POST">POST</span>
+        <div>
+          <h2>/accounts</h2>
+          <p>Cria uma nova conta</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="field">
+          <label>Nome</label>
+          <input id="create-name" type="text" placeholder="João Silva" />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input id="create-email" type="email" placeholder="joao@email.com" />
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <input id="create-password" type="password" placeholder="••••••••" />
+        </div>
+        <button class="btn btn-primary" onclick="doCreate()">Criar Conta</button>
+      </div>
+      <div class="response-panel" id="resp-create">
+        <div class="response-header">
+          <span>Resposta</span>
+          <span class="status-pill" id="status-create"></span>
+        </div>
+        <div class="response-body" id="body-create"></div>
+      </div>
+    </div>
+
+    <!-- Delete -->
+    <div class="panel" id="panel-delete" style="display:none">
+      <div class="panel-header">
+        <span class="method-badge DELETE">DELETE</span>
+        <div>
+          <h2>/accounts/{id}</h2>
+          <p>Remove uma conta pelo ID</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="field">
+          <label>ID</label>
+          <input id="delete-id" type="text" placeholder="uuid da conta" />
+        </div>
+        <button class="btn btn-danger" onclick="doDelete()">Deletar Conta</button>
+      </div>
+      <div class="response-panel" id="resp-delete">
+        <div class="response-header">
+          <span>Resposta</span>
+          <span class="status-pill" id="status-delete"></span>
+        </div>
+        <div class="response-body" id="body-delete"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  const panels = ['health','list','findById','create','delete'];
+  const btns = document.querySelectorAll('.endpoint-btn');
+
+  function show(name) {
+    panels.forEach(p => {
+      document.getElementById('panel-' + p).style.display = p === name ? 'block' : 'none';
+    });
+    btns.forEach((b, i) => b.classList.toggle('active', i === panels.indexOf(name)));
+  }
+
+  function baseUrl() {
+    return document.getElementById('base-url').value.replace(/\/$/, '');
+  }
+
+  function setResponse(key, status, body) {
+    const rp = document.getElementById('resp-' + key);
+    const sp = document.getElementById('status-' + key);
+    const bp = document.getElementById('body-' + key);
+    rp.classList.add('show');
+    sp.textContent = status;
+    sp.className = 'status-pill ' + (status >= 200 && status < 300 ? 's2xx' : status >= 400 && status < 500 ? 's4xx' : 's5xx');
+    if (bp) bp.textContent = typeof body === 'string' ? body : JSON.stringify(body, null, 2);
+  }
+
+  async function request(method, path, body) {
+    const opts = { method, headers: { 'Content-Type': 'application/json' } };
+    if (body) opts.body = JSON.stringify(body);
+    try {
+      const res = await fetch(baseUrl() + path, opts);
+      let data = '';
+      const ct = res.headers.get('content-type') || '';
+      if (ct.includes('application/json')) {
+        data = await res.json();
+      } else {
+        data = await res.text();
+        if (!data) data = '(sem corpo)';
+      }
+      // Location header
+      const loc = res.headers.get('location');
+      if (loc) data = { location: loc, ...(typeof data === 'object' ? data : {}) };
+      return { status: res.status, data };
+    } catch (e) {
+      return { status: 0, data: 'Erro de conexao: ' + e.message };
+    }
+  }
+
+  async function pingHealth() {
+    updateDot('checking');
+    const { status } = await request('GET', '/accounts/health-check');
+    if (status === 200) {
+      document.getElementById('status-dot').className = 'up';
+      document.getElementById('status-text').textContent = 'Online';
+    } else {
+      document.getElementById('status-dot').className = 'down';
+      document.getElementById('status-text').textContent = 'Offline (' + (status || 'sem resposta') + ')';
+    }
+  }
+
+  function updateDot(state) {
+    document.getElementById('status-dot').className = '';
+    document.getElementById('status-text').textContent = 'verificando...';
+  }
+
+  async function doHealthCheck() {
+    const { status, data } = await request('GET', '/accounts/health-check');
+    setResponse('health', status, data || '200 OK');
+  }
+
+  async function doListAll() {
+    const { status, data } = await request('GET', '/accounts');
+    setResponse('list', status, data);
+    const container = document.getElementById('table-list');
+    const bp = document.getElementById('body-list');
+    if (status === 200 && Array.isArray(data)) {
+      bp.style.display = 'none';
+      if (data.length === 0) {
+        container.innerHTML = '<div class="empty-state">Nenhuma conta encontrada.</div>';
+        return;
+      }
+      container.innerHTML = `
+        <table class="accounts-table">
+          <thead><tr><th>ID</th><th>Nome</th><th>Email</th><th></th></tr></thead>
+          <tbody>${data.map(a => `
+            <tr>
+              <td>${a.id}</td>
+              <td>${a.name}</td>
+              <td>${a.email}</td>
+              <td>
+                <button class="del-btn" onclick="quickDelete('${a.id}')">Deletar</button>
+              </td>
+            </tr>`).join('')}
+          </tbody>
+        </table>`;
+    } else {
+      bp.style.display = '';
+      container.innerHTML = '';
+    }
+  }
+
+  async function doFindById() {
+    const id = document.getElementById('find-id').value.trim();
+    if (!id) return alert('Informe o ID');
+    const { status, data } = await request('GET', '/accounts/' + id);
+    setResponse('findById', status, data);
+  }
+
+  async function doCreate() {
+    const name     = document.getElementById('create-name').value.trim();
+    const email    = document.getElementById('create-email').value.trim();
+    const password = document.getElementById('create-password').value;
+    if (!name || !email || !password) return alert('Preencha todos os campos');
+    const { status, data } = await request('POST', '/accounts', { name, email, password });
+    setResponse('create', status, status === 201 ? ('Criado! Location: ' + (data.location || '')) : data);
+  }
+
+  async function doDelete() {
+    const id = document.getElementById('delete-id').value.trim();
+    if (!id) return alert('Informe o ID');
+    const { status, data } = await request('DELETE', '/accounts/' + id);
+    setResponse('delete', status, status === 204 ? 'Conta deletada com sucesso.' : data);
+  }
+
+  async function quickDelete(id) {
+    if (!confirm('Deletar conta ' + id + '?')) return;
+    document.getElementById('delete-id').value = id;
+    show('delete');
+    await doDelete();
+    setTimeout(doListAll, 300);
+    show('list');
+  }
+
+  // ping on load
+  pingHealth();
+  setInterval(pingHealth, 30000);
+</script>
+</body>
+</html>
