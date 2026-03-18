@@ -321,6 +321,8 @@
   <div id="status-bar">
     <div id="status-dot"></div>
     <span id="status-text">verificando...</span>
+    <span id="auth-info" style="margin-left:16px;font-size:13px;color:var(--muted)"></span>
+    <button id="logout-btn" onclick="logout()" style="display:none;margin-left:8px;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:12px;font-family:var(--font)">Sair</button>
   </div>
 </header>
 
@@ -494,7 +496,16 @@
   </div>
 </main>
 
+<script src="store.js"></script>
 <script>
+  // ── Auth check ───────────────────────────────────────────────────────────────
+  const token = getToken();
+  if (token) {
+    document.getElementById('auth-info').textContent = 'Autenticado';
+    document.getElementById('auth-info').style.color = 'var(--success)';
+    document.getElementById('logout-btn').style.display = 'inline-block';
+  }
+
   const panels = ['health','list','findById','create','delete'];
   const btns = document.querySelectorAll('.endpoint-btn');
 
@@ -520,7 +531,10 @@
   }
 
   async function request(method, path, body) {
-    const opts = { method, headers: { 'Content-Type': 'application/json' } };
+    const headers = { 'Content-Type': 'application/json' };
+    const t = getToken();
+    if (t) headers['Authorization'] = 'Bearer ' + t;
+    const opts = { method, headers };
     if (body) opts.body = JSON.stringify(body);
     try {
       const res = await fetch(baseUrl() + path, opts);

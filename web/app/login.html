@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Criar Conta — Microservices</title>
+  <title>Login — Microservices</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -148,18 +148,13 @@
   <div class="card-header">
     <div class="logo">⚙</div>
     <div>
-      <h1>Criar Conta</h1>
-      <p>Microservices — Register</p>
+      <h1>Entrar</h1>
+      <p>Microservices — Auth</p>
     </div>
   </div>
 
   <div class="card-body">
     <div id="error-msg" class="error-msg"></div>
-
-    <div class="field">
-      <label>Nome</label>
-      <input id="name" type="text" placeholder="Joao Silva" autocomplete="name" />
-    </div>
 
     <div class="field">
       <label>Email</label>
@@ -168,18 +163,22 @@
 
     <div class="field">
       <label>Senha</label>
-      <input id="password" type="password" placeholder="••••••••" autocomplete="new-password"
-             onkeydown="if(event.key==='Enter') register()" />
+      <input id="password" type="password" placeholder="••••••••" autocomplete="current-password"
+             onkeydown="if(event.key==='Enter') login()" />
     </div>
 
-    <button class="btn btn-primary" onclick="register()">Criar Conta</button>
+    <button class="btn btn-primary" onclick="login()">Entrar</button>
   </div>
 
   <div class="footer-link">
-    Ja tem conta? <a href="login.html">Entrar</a>
+    Nao tem conta? <a href="register.html">Criar conta</a>
   </div>
 </div>
 
 <script src="store.js"></script>
+<script>
+  // If already logged in, skip to main page
+  if (getToken()) window.location.href = "index.html";
+</script>
 </body>
 </html>
