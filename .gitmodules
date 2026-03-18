@@ -4,3 +4,12 @@
 [submodule "api/account-service"]
 	path = api/account-service
 	url = https://github.com/Microservice-Alex-Carlos-Lucas/account-service.git
+[submodule "api/gateway-service"]
+	path = api/gateway-service
+	url = https://github.com/Microservice-Alex-Carlos-Lucas/gateway-service.git
+[submodule "api/auth"]
+	path = api/auth
+	url = https://github.com/Microservice-Alex-Carlos-Lucas/auth.git
+[submodule "api/auth-service"]
+	path = api/auth-service
+	url = https://github.com/Microservice-Alex-Carlos-Lucas/auth-service.git
