@@ -3,9 +3,9 @@ name: store-site
 services:
 
   site:
-    image: nginx:latest
+    image: nginx:alpine
     hostname: site
     ports:
       - 80:80
     volumes:
-      - ./app:/usr/share/nginx/html
+      - ./app:/usr/share/nginx/html:ro
