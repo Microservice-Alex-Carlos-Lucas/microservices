@@ -26,3 +26,7 @@ replay_pid*
 /env
 .env
 api/volume/db
+
+# Jenkins runtime — only job definitions should be tracked
+jenkins/config/jenkins/
+
