@@ -1,0 +1,63 @@
+# Order API
+
+**Responsável:** Lucas  
+**Repositório:** [Microservice-Alex-Carlos-Lucas/order-service](https://github.com/Microservice-Alex-Carlos-Lucas/order-service)
+
+---
+
+## Descrição
+
+API REST para gerenciamento de pedidos dos usuários autenticados. Integra-se com
+product-service (via OpenFeign) para obter detalhes dos produtos, e com exchange-service
+para conversão de moeda nos totais.
+
+## Endpoints
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `POST` | `/orders` | Criar pedido para o usuário autenticado |
+| `GET` | `/orders` | Listar pedidos do usuário autenticado |
+| `GET` | `/orders/{id}` | Detalhar pedido (aceita `?currency=BRL`) |
+
+**POST /orders — request:**
+```json
+{
+  "items": [
+    { "idProduct": "0195abfb-7074-73a9-9d26-b4b9fbaab0a8", "quantity": 2 },
+    { "idProduct": "0195abfe-e416-7052-be3b-27cdaf12a984", "quantity": 1 }
+  ]
+}
+```
+
+**GET /orders/{id}?currency=BRL — response:**
+```json
+{
+  "id": "0195ac33-73e5-7cb3-90ca-7b5e7e549569",
+  "date": "2025-09-01T12:30:00",
+  "currency": "BRL",
+  "items": [
+    { "id": "...", "product": { "id": "..." }, "quantity": 2, "total": 116.28 }
+  ],
+  "total": 151.73
+}
+```
+
+## Inter-service communication
+
+| Serviço | Protocolo | Propósito |
+|---------|-----------|-----------|
+| product-service | OpenFeign | Obter nome/preço do produto |
+| exchange-service | OpenFeign | Converter total de USD para a moeda solicitada |
+
+## Stack
+
+| Item | Detalhe |
+|------|---------|
+| Linguagem | Java 25 |
+| Framework | Spring Boot 4.0.3 + Spring Cloud OpenFeign |
+| Banco | PostgreSQL (schema: `orders`) |
+| Migrações | Flyway |
+| Métricas | Prometheus via Actuator |
+
+!!! note "Status"
+    Implementação em andamento. Scaffold com dependências e configuração disponível no repositório.

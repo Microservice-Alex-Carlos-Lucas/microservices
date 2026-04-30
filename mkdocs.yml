@@ -1,0 +1,62 @@
+site_name: Store Platform — Alex, Carlos & Lucas
+site_description: Plataformas, Microserviços, DevOps e APIs — Insper 2026.1
+site_author: Alex Chequer, Carlos, Lucas
+repo_url: https://github.com/Microservice-Alex-Carlos-Lucas/microservices
+repo_name: Microservice-Alex-Carlos-Lucas/microservices
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - tables
+
+nav:
+  - Home: index.md
+  - Arquitetura: architecture.md
+  - Microserviços:
+    - Exchange API: services/exchange.md
+    - Product API: services/product.md
+    - Order API: services/order.md
+    - Account API: services/account.md
+    - Auth Service: services/auth.md
+    - Gateway Service: services/gateway.md
+  - Infraestrutura:
+    - AWS: infra/aws.md
+    - EKS: infra/eks.md
+    - CI/CD: infra/cicd.md
+  - Testes de Carga: load-testing.md
+  - Bottlenecks: bottlenecks.md
+  - Custos & PaaS: costs.md
+  - Apresentação: presentation.md

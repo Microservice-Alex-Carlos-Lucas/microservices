@@ -13,3 +13,12 @@
 [submodule "api/auth-service"]
 	path = api/auth-service
 	url = https://github.com/Microservice-Alex-Carlos-Lucas/auth-service.git
+[submodule "api/exchange-service"]
+	path = api/exchange-service
+	url = git@github.com:Microservice-Alex-Carlos-Lucas/exchange.git
+[submodule "api/product-service"]
+	path = api/product-service
+	url = git@github.com:Microservice-Alex-Carlos-Lucas/product-service.git
+[submodule "api/order-service"]
+	path = api/order-service
+	url = git@github.com:Microservice-Alex-Carlos-Lucas/order-service.git
