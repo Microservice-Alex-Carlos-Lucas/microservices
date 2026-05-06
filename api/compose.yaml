@@ -15,6 +15,10 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-devpass}
       POSTGRES_DB: ${DB_NAME:-store}
 
+  redis:
+    image: redis:7-alpine
+    hostname: redis
+
   account:
     build:
       context: ./account-service
@@ -62,8 +66,12 @@ services:
     hostname: exchange
     environment:
       PORT: 8000
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     deploy:
       replicas: 1
+    depends_on:
+      - redis
 
   product:
     build:
@@ -76,10 +84,13 @@ services:
       DATABASE_DB: ${DB_NAME:-store}
       DATABASE_USERNAME: ${DB_USER:-store}
       DATABASE_PASSWORD: ${DB_PASSWORD:-devpass}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     deploy:
       replicas: 1
     depends_on:
       - db
+      - redis
 
   order:
     build:
@@ -94,9 +105,12 @@ services:
       DATABASE_PASSWORD: ${DB_PASSWORD:-devpass}
       PRODUCT_SERVICE_URL: http://product:8080
       EXCHANGE_SERVICE_URL: http://exchange:8000
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     deploy:
       replicas: 1
     depends_on:
       - db
       - product
       - exchange
+      - redis

@@ -1,0 +1,25 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: store-cluster
+  region: us-east-1
+  version: "1.30"
+
+iam:
+  withOIDC: true
+
+managedNodeGroups:
+  - name: store-nodes
+    instanceType: t3.medium
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 4
+    volumeSize: 30
+    labels:
+      role: workers
+    privateNetworking: false
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true

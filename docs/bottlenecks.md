@@ -4,27 +4,32 @@ O projeto implementa ao menos **2 bottlenecks por membro** (mínimo 6 no total).
 
 ## Alex — Exchange API
 
-### Bottleneck 1: Caching de taxas de câmbio
+### Bottleneck 1: Caching de taxas de câmbio com Redis
 
 **Problema:** Cada requisição a `/exchanges/{from}/{to}` faz uma chamada HTTP em tempo real
 à AwesomeAPI, adicionando latência e risco de rate-limiting sob carga.
 
-**Solução:** Cache em memória com TTL de 60 segundos por par de moedas. Em produção, substituir
-por Redis para compartilhar cache entre réplicas.
+**Solução:** Cliente Redis com TTL de 60s por par de moedas (`exchange:rate:{FROM}:{TO}`).
+Compartilhado entre réplicas via service `redis` no compose / pod no EKS. Falhas de Redis
+caem para chamada direta à AwesomeAPI (resiliência > eficiência).
 
-**Impacto:** Latência de cache hit < 5ms vs ~200ms de cache miss.
+**Impacto medido:** cache miss 86ms → cache hit 0.9ms (**91× speedup**), confirmado em
+`docker compose up -d --build exchange redis` + dois `curl` consecutivos. Provado também
+por teste com `fakeredis` em `tests/test_service.py::test_cache_hit_skips_upstream_fetch`.
 
-### Bottleneck 2: Observabilidade (Prometheus + Grafana)
+### Bottleneck 2: Observabilidade (Prometheus)
 
 **Problema:** Sem métricas, impossível identificar degradação de performance ou acionar
 autoscaling baseado em carga real.
 
 **Solução:** `prometheus-fastapi-instrumentator` expõe `/metrics` com histogramas de latência,
-contadores de requisições e erros por rota.
+contadores de requisições e erros por rota. Counters customizados
+`exchange_cache_hits_total` / `exchange_cache_misses_total` evidenciam o efeito do cache.
 
-**Métricas-chave:** `http_request_duration_seconds`, `http_requests_total`, `http_requests_in_progress`
+**Métricas-chave:** `http_request_duration_seconds`, `http_requests_total`,
+`http_requests_in_progress`, `exchange_cache_{hits,misses}_total`
 
-Detalhes: [documentação individual de Alex](https://alexchequer.github.io/exchange/bottlenecks/)
+Detalhes: [documentação individual de Alex](https://github.com/Microservice-Alex-Carlos-Lucas/exchange/blob/main/docs/bottlenecks.md)
 
 ---
 

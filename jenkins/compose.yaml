@@ -36,6 +36,8 @@ services:
             rm -rf ./aws
 
         RUN usermod -aG docker jenkins
+    env_file:
+      - ../infra/.env
     ports:
       - 9080:8080
     volumes:

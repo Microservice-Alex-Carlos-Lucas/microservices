@@ -58,5 +58,8 @@ nav:
     - CI/CD: infra/cicd.md
   - Testes de Carga: load-testing.md
   - Bottlenecks: bottlenecks.md
+  - Specs (handoff):
+    - Product (Carlos): specs/product-bottlenecks.md
+    - Order (Lucas): specs/order-bottleneck-extra.md
   - Custos & PaaS: costs.md
   - Apresentação: presentation.md

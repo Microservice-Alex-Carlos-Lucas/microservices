@@ -30,3 +30,6 @@ api/volume/db
 # Jenkins runtime — only job definitions should be tracked
 jenkins/config/jenkins/
 
+
+# MkDocs build output
+site/
