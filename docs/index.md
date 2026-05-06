@@ -38,13 +38,17 @@ Aplicação web de e-commerce com arquitetura de microserviços. Os usuários po
 | Auth | 5% | ✅ Concluído |
 | Account | 5% | ✅ Concluído |
 | Exchange API | 5% | ✅ Concluído |
-| Bottlenecks | 20% | 🔄 Em andamento |
-| AWS | 5% | ⏳ Pendente |
-| EKS | 10% | ⏳ Pendente |
-| CI/CD (Jenkins) | 10% | 🔄 Em andamento |
-| Load Testing | 15% | ⏳ Pendente |
-| Custos & PaaS & SLA | 10% | ⏳ Pendente |
-| MkDocs | 10% | 🔄 Em andamento |
+| Bottlenecks (todos os 6 implementados + medidos) | 20% | ✅ Concluído |
+| AWS | 5% | 🔑 Aguarda credencial (infra pronta em `infra/`) |
+| EKS | 10% | 🔑 Aguarda execução do `infra/scripts/bootstrap.sh` |
+| CI/CD (Jenkins) | 10% | ✅ Pipelines com Build + Push + Deploy to EKS |
+| Load Testing | 15% | ✅ k6 baseline rodado, scripts prontos para HPA demo |
+| Custos & PaaS & SLA | 10% | ✅ Documentado |
+| MkDocs | 10% | ✅ 4 sites publicados (parent + exchange + order + product) |
+
+🔑 = bloqueado apenas pela falta de credencial AWS — todo o resto da
+infraestrutura (manifests k8s, scripts eksctl, RDS, nginx-ingress, Redis)
+está pronto pra rodar.
 
 ## Arquitetura geral
 
