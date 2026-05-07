@@ -42,5 +42,6 @@ services:
       - 9080:8080
     volumes:
       - ${CONFIG:-./config}/jenkins:/var/jenkins_home
+      - ./init.groovy.d:/var/jenkins_home/init.groovy.d:ro
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
