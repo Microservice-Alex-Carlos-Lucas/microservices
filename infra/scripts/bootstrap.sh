@@ -18,8 +18,8 @@ eksctl create cluster -f "$ROOT/eks/cluster.yaml"
 echo "[2/5] Configurando kubeconfig..."
 aws eks update-kubeconfig --region "$AWS_REGION" --name "$EKS_CLUSTER_NAME"
 
-echo "[3/5] Instalando metrics-server (necessário para HPA)..."
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+echo "[3/5] Verificando metrics-server (EKS já provisiona como addon)..."
+kubectl wait --for=condition=Available deployment/metrics-server -n kube-system --timeout=120s
 
 echo "[4/5] Instalando nginx-ingress controller..."
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx 2>/dev/null || true
