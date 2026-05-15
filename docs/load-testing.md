@@ -124,20 +124,29 @@ Gravamos um GIF/vídeo da demo com **3 terminais lado a lado**:
 2. `kubectl top pods --watch` — uso de CPU subindo conforme o tráfego aumenta
 3. `k6 run scripts/k6/gateway-stress.js` — ramp 1 → 200 VUs
 
-!!! tip "GIF do stress test a capturar"
-    Salvar em `docs/evidence/screenshots/stress-test.gif` — depois o
-    `<figure>` abaixo fica funcional. Roteiro completo de gravação em
-    [`video-runbook.md`](video-runbook.md) e script auxiliar em
-    `scripts/demo-video.sh hpa`.
+<div class="video-wrapper" markdown="span">
+  <iframe width="100%" height="450"
+    src="https://www.youtube.com/embed/0wmBCGyHgN8"
+    title="Stress test ao vivo — HPA do gateway escalando 1 -> 5 replicas"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
 
-<!--
-Quando o GIF existir, descomente este bloco:
+Link direto: [youtu.be/0wmBCGyHgN8](https://youtu.be/0wmBCGyHgN8) (YouTube unlisted).
 
-<figure markdown="span">
-  ![GIF do stress test — HPA escalando o gateway de 1 para 5 réplicas](evidence/screenshots/stress-test.gif)
-  <figcaption>Figura 1 — Stress test ao vivo: HPA do gateway escala de 1 → 5 réplicas conforme `k6` ramp-up dispara a CPU acima de 50%. Pods novos passam de `ContainerCreating` para `Running` durante o teste.</figcaption>
-</figure>
--->
+**O que aparece no vídeo:**
+
+- Terminal esquerdo (`watch kubectl get hpa,pods -l app=gateway`): HPA do gateway
+  saindo de `REPLICAS 1` e escalando até `5` conforme a CPU passa de 50%.
+  Pods novos aparecem como `ContainerCreating` e viram `Running` ao longo do teste.
+- Terminal direito (`k6 run gateway-stress.js`): ramp 1 → 200 VUs em 2min,
+  hold 1min em 200 VUs, ramp-down 30s. Stats finais no fim (`http_req_failed`,
+  `http_req_duration` p95).
+
+Roteiro completo de gravação em [`video-runbook.md`](video-runbook.md) e script
+auxiliar em `scripts/demo-video.sh hpa`.
 
 ### Métricas Grafana (opcional — a capturar)
 
