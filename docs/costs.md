@@ -30,44 +30,32 @@ Cluster fica up apenas durante a janela de demo (~30 min).
 | Cluster + RDS Multi-AZ (HA produção) | ~$220 |
 | Free tier não cobre EKS — só RDS db.t3.micro 750h/mês no 1º ano | — |
 
-## Análise real — AWS Cost Explorer
+## Análise real — AWS Cost and Usage
 
 Durante o desenvolvimento, o cluster ficou up por janelas mais longas
-(7 dias contínuos em uma das semanas) para iterar nos deploys e validar
-o stress test. O custo observado:
+(7+ dias contínuos em uma das semanas) para iterar nos deploys e validar
+o stress test. O custo observado no console AWS:
 
 | Métrica | Valor |
 |---|---|
-| Custo mês atual (parcial) | **$148.59** |
-| Projeção fim de mês | **$307.79** |
+| Custo mês atual (parcial) | **$171.87** |
+| Projeção fim de mês | **$328.85** |
 
-### Composição percentual (observada no Cost Explorer)
+### Composição (observada no widget "Cost and usage" do Console)
 
-| Serviço | % do custo |
+| Serviço | Cor no gráfico |
 |---|---|
-| **Elastic Container Service for Kubernetes (EKS)** | dominante |
-| **EC2 — Compute** (worker nodes) | significativo |
-| **EC2 — Other** (volumes EBS, IPs públicos, transfer) | significativo |
+| **Elastic Container Service for Kubernetes (EKS)** | azul — dominante |
+| **EC2 — Compute** (worker nodes) | verde |
+| **EC2 — Other** (volumes EBS, IPs públicos, transfer) | roxo |
+| **Virtual Private Cloud** (NAT, etc.) | laranja |
 | **Tax** | imposto sobre tudo |
-| **Elastic Load Balancing** (NLB) | menor |
-| **Virtual Private Cloud** (NAT, etc.) | menor |
-
-!!! tip "Print do Cost Explorer a adicionar"
-    Capturar print da aba **Billing → Cost and usage → Cost Explorer** no
-    console AWS, filtrando por **service** no agrupamento. Salvar em
-    `docs/evidence/screenshots/cost-explorer.png` — depois o `<figure>` abaixo
-    fica funcional. O valor projetado é a evidência concreta de que o
-    controle de custo via teardown é essencial — sem ele, ~$300/mês
-    para um projeto de aula.
-
-<!--
-Quando o print existir, descomente este bloco:
+| **Others** | resto |
 
 <figure markdown="span">
-  ![AWS Cost Explorer — custos atual e projeção](evidence/screenshots/cost-explorer.png)
-  <figcaption>Figura 1 — Tela "Cost and usage" do AWS Billing mostrando custo atual e projeção mensal, com breakdown por serviço.</figcaption>
+  ![AWS Console Home — Cost and usage widget mostrando $171.87 atual e $328.85 projeção](evidence/screenshots/cost-overview.png){ width="100%" }
+  <figcaption>Figura 1 — Widget "Cost and usage" do Console AWS: custo atual e projeção mensal, com breakdown por serviço (EKS dominante).</figcaption>
 </figure>
--->
 
 ### Conclusão
 

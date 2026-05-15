@@ -42,7 +42,7 @@ NLB provisionado automaticamente pelo `nginx-ingress` controller via Helm
 Estado e listeners no console AWS:
 
 <figure markdown="span">
-  ![NLB internet-facing, 2 AZs, listeners TCP:80 e TCP:443](../evidence/screenshots/load-balancer.png)
+  ![NLB internet-facing, 2 AZs, listeners TCP:80 e TCP:443](../evidence/screenshots/load-balancer.png){ width="100%" }
   <figcaption>Figura 1 — Network Load Balancer (type `network`, scheme `internet-facing`, state `Active`). Os target groups `k8s-ingressn-ingressn-...` confirmam que o NLB foi provisionado pelo `nginx-ingress` do Kubernetes (não criado na mão).</figcaption>
 </figure>
 
@@ -51,7 +51,7 @@ Estado e listeners no console AWS:
 Database gerenciado, `db.t3.micro`, single-AZ, Postgres 17.9. Configuração no console:
 
 <figure markdown="span">
-  ![RDS store-db Configuration — PostgreSQL 17.9, db.t3.micro, 20 GB](../evidence/screenshots/rds-config.png)
+  ![RDS store-db Configuration — PostgreSQL 17.9, db.t3.micro, 20 GB](../evidence/screenshots/rds-config.png){ width="100%" }
   <figcaption>Figura 2 — RDS `store-db`: PostgreSQL 17.9, `db.t3.micro`, 20 GB allocated storage, single-AZ. Schema versionado via Flyway com 3 namespaces (`accounts` / `products` / `orders`).</figcaption>
 </figure>
 
