@@ -41,19 +41,21 @@ NLB provisionado automaticamente pelo `nginx-ingress` controller via Helm
 (`Service type=LoadBalancer` com annotation `service.beta.kubernetes.io/aws-load-balancer-type: nlb`).
 Estado e listeners no console AWS:
 
-![NLB internet-facing, 2 AZs, listeners TCP:80 e TCP:443](../evidence/screenshots/load-balancer.png)
-
-Repara nos **target groups `k8s-ingressn-ingressn-...`** — é a evidência de que o
-NLB foi provisionado pelo Kubernetes (não criado na mão).
+<figure markdown="span">
+  ![NLB internet-facing, 2 AZs, listeners TCP:80 e TCP:443](../evidence/screenshots/load-balancer.png)
+  <figcaption>Figura 1 — Network Load Balancer (type `network`, scheme `internet-facing`, state `Active`). Os target groups `k8s-ingressn-ingressn-...` confirmam que o NLB foi provisionado pelo `nginx-ingress` do Kubernetes (não criado na mão).</figcaption>
+</figure>
 
 ### RDS PostgreSQL
 
 Database gerenciado, `db.t3.micro`, single-AZ, Postgres 17.9. Configuração no console:
 
-![RDS store-db Configuration — PostgreSQL 17.9, db.t3.micro, 20 GB](../evidence/screenshots/rds-config.png)
+<figure markdown="span">
+  ![RDS store-db Configuration — PostgreSQL 17.9, db.t3.micro, 20 GB](../evidence/screenshots/rds-config.png)
+  <figcaption>Figura 2 — RDS `store-db`: PostgreSQL 17.9, `db.t3.micro`, 20 GB allocated storage, single-AZ. Schema versionado via Flyway com 3 namespaces (`accounts` / `products` / `orders`).</figcaption>
+</figure>
 
-Schema versionado via **Flyway** — `accounts`, `products` e `orders` em schemas
-separados. Evidência das tabelas e migrations aplicadas em
+Evidência das tabelas e migrations aplicadas em
 [`docs/evidence/09-rds-schema.txt`](../evidence/09-rds-schema.txt).
 
 ## Estratégia de custo controlado
@@ -68,24 +70,24 @@ Verificação via `aws ce get-cost-and-usage` no fim do mês para garantir que n
 
 ```mermaid
 graph TB
-    subgraph aws[AWS us-east-1]
-        subgraph vpc[EKS VPC]
-            subgraph cp[Control Plane (managed)]
-                eks[EKS API]
+    subgraph aws["AWS us-east-1"]
+        subgraph vpc["EKS VPC"]
+            subgraph cp["Control Plane (managed)"]
+                eks["EKS API"]
             end
-            subgraph nodes[NodeGroup 2× t3.medium]
-                gw[gateway pods<br/>HPA 1-5]
-                auth[auth pod]
-                acc[account pod]
-                prod[product pods]
-                ord[order pods]
-                exch[exchange pods]
-                redis[redis pod]
-                nginx[nginx-ingress pod]
+            subgraph nodes["NodeGroup 2x t3.medium"]
+                gw["gateway pods<br>HPA 1-5"]
+                auth["auth pod"]
+                acc["account pod"]
+                prod["product pods"]
+                ord["order pods"]
+                exch["exchange pods"]
+                redis["redis pod"]
+                nginx["nginx-ingress pod"]
             end
-            rds[(RDS Postgres<br/>db.t3.micro)]
+            rds[("RDS Postgres<br>db.t3.micro")]
         end
-        nlb[NLB<br/>internet-facing]
+        nlb["NLB<br>internet-facing"]
     end
     Internet --> nlb --> nginx --> gw
     gw --> auth & acc & prod & ord & exch

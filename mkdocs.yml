@@ -115,9 +115,6 @@ nav:
     - Exchange API: services/exchange.md
     - Product API: services/product.md
     - Order API: services/order.md
-    - Account API: services/account.md
-    - Auth Service: services/auth.md
-    - Gateway Service: services/gateway.md
   - Infraestrutura:
     - AWS: infra/aws.md
     - EKS: infra/eks.md
@@ -127,5 +124,6 @@ nav:
   - Specs (handoff):
     - Product (Carlos): specs/product-bottlenecks.md
     - Order (Lucas): specs/order-bottleneck-extra.md
-  - Custos & PaaS: costs.md
+  - Custos & SLA: costs.md
+  - PaaS: paas.md
   - Apresentação: presentation.md

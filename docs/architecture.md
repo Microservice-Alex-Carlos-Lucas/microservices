@@ -16,13 +16,13 @@ graph LR
         gateway -->|/exchanges/**| exchange
 
         auth -->|valida JWT| gateway
-        account --> db[(PostgreSQL\nschemas: accounts)]
-        product --> db2[(PostgreSQL\nschemas: products)]
-        order --> db3[(PostgreSQL\nschemas: orders)]
+        account --> db[("PostgreSQL<br>schemas: accounts")]
+        product --> db2[("PostgreSQL<br>schemas: products")]
+        order --> db3[("PostgreSQL<br>schemas: orders")]
     end
 
-    order -->|OpenFeign\n/products/{id}| product
-    order -->|OpenFeign\n/exchanges/{from}/{to}| exchange
+    order -->|"OpenFeign<br>/products/{id}"| product
+    order -->|"OpenFeign<br>/exchanges/{from}/{to}"| exchange
     exchange -->|HTTP| awesomeapi([AwesomeAPI])
 ```
 

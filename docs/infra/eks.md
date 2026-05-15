@@ -13,19 +13,28 @@ e provisionado via `eksctl`.
 
 ### Cluster ativo no console AWS
 
-![EKS cluster Overview — store-cluster Active, v1.30](../evidence/screenshots/kubernetes-overview.png)
+<figure markdown="span">
+  ![EKS cluster Overview — store-cluster Active, v1.30](../evidence/screenshots/kubernetes-overview.png)
+  <figcaption>Figura 1 — EKS cluster `store-cluster` Active, Kubernetes 1.30, Provider EKS, OIDC habilitado.</figcaption>
+</figure>
 
 ### Node group `store-nodes`
 
 Configuração do node group gerenciado (mesma da spec acima):
 
-![Node group store-nodes — t3.medium, desired 2](../evidence/screenshots/kubernetes-node-groups.png)
+<figure markdown="span">
+  ![Node group store-nodes — t3.medium, desired 2](../evidence/screenshots/kubernetes-node-groups.png)
+  <figcaption>Figura 2 — Node group `store-nodes`: instance type `t3.medium`, desired size 2 (min 1, max 4), capacidade On-Demand.</figcaption>
+</figure>
 
 ### Instâncias EC2 (worker nodes)
 
 Os 2 nodes EC2 que compõem o cluster, em AZs diferentes (`us-east-1a` e `us-east-1b`):
 
-![EC2 nodes — 2x t3.medium Running](../evidence/screenshots/kubernetes-nodes.png)
+<figure markdown="span">
+  ![EC2 nodes — 2x t3.medium Running](../evidence/screenshots/kubernetes-nodes.png)
+  <figcaption>Figura 3 — Worker nodes: 2× `t3.medium` em estado `Running`, 3/3 checks passed, em AZs diferentes (alta disponibilidade).</figcaption>
+</figure>
 
 ## Provisionamento
 

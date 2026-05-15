@@ -116,7 +116,32 @@ comparar p95 de `http_server_requests_seconds{uri="/orders"}` antes e depois do 
 do Lucas. Esperado: speedup ≥ 5× na média (cache absorve os hops Feign para
 `exchange-service` durante a janela de 60s).
 
-## Vídeo
+## Demonstração visual — HPA escalando sob carga
 
-!!! info "Em breve"
-    Vídeo do teste de carga com 3 janelas (HPA, top, k6) + métricas Grafana.
+Gravamos um GIF/vídeo da demo com **3 terminais lado a lado**:
+
+1. `watch kubectl get hpa,pods -l app=gateway` — número de réplicas mudando em tempo real
+2. `kubectl top pods --watch` — uso de CPU subindo conforme o tráfego aumenta
+3. `k6 run scripts/k6/gateway-stress.js` — ramp 1 → 200 VUs
+
+!!! tip "GIF do stress test a capturar"
+    Salvar em `docs/evidence/screenshots/stress-test.gif` — depois o
+    `<figure>` abaixo fica funcional. Roteiro completo de gravação em
+    [`video-runbook.md`](video-runbook.md) e script auxiliar em
+    `scripts/demo-video.sh hpa`.
+
+<!--
+Quando o GIF existir, descomente este bloco:
+
+<figure markdown="span">
+  ![GIF do stress test — HPA escalando o gateway de 1 para 5 réplicas](evidence/screenshots/stress-test.gif)
+  <figcaption>Figura 1 — Stress test ao vivo: HPA do gateway escala de 1 → 5 réplicas conforme `k6` ramp-up dispara a CPU acima de 50%. Pods novos passam de `ContainerCreating` para `Running` durante o teste.</figcaption>
+</figure>
+-->
+
+### Métricas Grafana (opcional — a capturar)
+
+!!! tip "Print Grafana a adicionar"
+    Print do painel do Grafana com `http_server_requests_seconds{quantile="0.95"}`
+    durante a janela do teste, mostrando que p95 não dispara apesar do
+    ramp-up. Salvar em `docs/evidence/screenshots/grafana-p95.png`.
