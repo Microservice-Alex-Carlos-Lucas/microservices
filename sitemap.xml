@@ -72,12 +72,4 @@
          <loc>https://microservice-alex-carlos-lucas.github.io/microservices/services/product/</loc>
          <lastmod>2026-05-15</lastmod>
     </url>
-    <url>
-         <loc>https://microservice-alex-carlos-lucas.github.io/microservices/specs/order-bottleneck-extra/</loc>
-         <lastmod>2026-05-15</lastmod>
-    </url>
-    <url>
-         <loc>https://microservice-alex-carlos-lucas.github.io/microservices/specs/product-bottlenecks/</loc>
-         <lastmod>2026-05-15</lastmod>
-    </url>
 </urlset>
