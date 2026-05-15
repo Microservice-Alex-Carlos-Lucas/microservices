@@ -78,10 +78,9 @@ libs/interfaces `account` e `auth-interface`):
 Pipeline completo do `exchange` (Build → Push Image → Deploy to EKS) — do
 clone do repo até o `kubectl rollout status` confirmando o deploy em EKS.
 
-<!-- TODO: substituir VIDEO_ID pelo ID do YouTube unlisted depois de subir o video -->
 <div class="video-wrapper" markdown="span">
   <iframe width="100%" height="450"
-    src="https://www.youtube.com/embed/VIDEO_ID"
+    src="https://www.youtube.com/embed/TEKIyv2UkAw"
     title="Jenkins pipeline rodando do inicio ao fim"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -89,11 +88,7 @@ clone do repo até o `kubectl rollout status` confirmando o deploy em EKS.
   </iframe>
 </div>
 
-!!! tip "Upload do vídeo a fazer"
-    Vídeo gravado em `docs/evidence/screenshots/jenkins-video.mov` (112 MB,
-    gitignored). Subir para YouTube como **unlisted** (privacy → unlisted),
-    pegar o video ID da URL (`youtube.com/watch?v=XXXXXXXXXXX`), e
-    substituir `VIDEO_ID` no `<iframe>` acima.
+Link direto: [youtu.be/TEKIyv2UkAw](https://youtu.be/TEKIyv2UkAw) (YouTube unlisted).
 
 ## Docker Hub — imagens publicadas
 
