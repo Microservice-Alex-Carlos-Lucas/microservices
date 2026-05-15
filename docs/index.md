@@ -39,16 +39,18 @@ Aplicação web de e-commerce com arquitetura de microserviços. Os usuários po
 | Account | 5% | ✅ Concluído |
 | Exchange API | 5% | ✅ Concluído |
 | Bottlenecks (todos os 6 implementados + medidos) | 20% | ✅ Concluído |
-| AWS | 5% | 🔑 Aguarda credencial (infra pronta em `infra/`) |
-| EKS | 10% | 🔑 Aguarda execução do `infra/scripts/bootstrap.sh` |
-| CI/CD (Jenkins) | 10% | ✅ Pipelines com Build + Push + Deploy to EKS |
-| Load Testing | 15% | ✅ k6 baseline rodado, scripts prontos para HPA demo |
-| Custos & PaaS & SLA | 10% | ✅ Documentado |
+| AWS | 5% | ✅ Conta ativa, IAM user `cluster-admin`, Budget Alert configurado |
+| EKS | 10% | ✅ Cluster `store-cluster` provisionado (us-east-1), 2× t3.medium, RDS + nginx-ingress + Redis |
+| CI/CD (Jenkins) | 10% | ✅ 8 pipelines verdes com Build + Push + Deploy to EKS |
+| Load Testing | 15% | ✅ k6 + HPA validados, scripts em `scripts/k6/` |
+| Custos & PaaS & SLA | 10% | ✅ Documentado em [Custos & SLA](costs.md) + [PaaS](paas.md) |
 | MkDocs | 10% | ✅ 4 sites publicados (parent + exchange + order + product) |
 
-🔑 = bloqueado apenas pela falta de credencial AWS — todo o resto da
-infraestrutura (manifests k8s, scripts eksctl, RDS, nginx-ingress, Redis)
-está pronto pra rodar.
+!!! info "Reprodução por terceiros"
+    Pra reproduzir o cluster do zero é necessário ter credenciais AWS válidas
+    em `infra/.env` (template em `infra/.env.example`). Depois é só rodar
+    `bash infra/scripts/bootstrap.sh` (~10 min) e `bash infra/scripts/deploy-all.sh`.
+    O `.env` é `gitignored` por padrão — credenciais nunca saem da máquina do operador.
 
 ## Arquitetura geral
 
