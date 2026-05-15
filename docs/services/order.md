@@ -55,9 +55,21 @@ para conversão de moeda nos totais.
 |------|---------|
 | Linguagem | Java 25 |
 | Framework | Spring Boot 4.0.3 + Spring Cloud OpenFeign |
-| Banco | PostgreSQL (schema: `orders`) |
+| Banco | PostgreSQL (schema: `orders`) — RDS em produção |
 | Migrações | Flyway |
+| Cache | Redis (wrapper `@Cacheable` no Feign do exchange-service, TTL 60s) |
 | Métricas | Prometheus via Actuator |
+| Orquestração | Kubernetes (EKS) com HPA (target 50% CPU, 1-5 réplicas) |
+| CI/CD | Jenkins — Build → Push → Deploy to EKS |
 
-!!! note "Status"
-    Implementação em andamento. Scaffold com dependências e configuração disponível no repositório.
+## Status
+
+- CRUD endpoints + integração com product/exchange via Feign: ✅
+- Cache do `ExchangeClient` (bottleneck 1, 25× speedup no GET com moeda alternativa): ✅
+- `@Timed` + counter `orders.created` (bottleneck 2): ✅
+- k8s manifests + HPA: ✅
+- Deploy em cluster EKS (`store-cluster`): ✅
+- Pipeline Jenkins (Build → Push → Deploy to EKS): ✅
+
+Documentação detalhada por bottleneck em
+[microservice-alex-carlos-lucas.github.io/order-service](https://microservice-alex-carlos-lucas.github.io/order-service/).
