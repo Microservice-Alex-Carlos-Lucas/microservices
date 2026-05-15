@@ -11,6 +11,22 @@ e provisionado via `eksctl`.
 - NodeGroup: 2× **t3.medium** (desired=2, min=1, max=4)
 - OIDC habilitado (necessário pra IRSA futuro)
 
+### Cluster ativo no console AWS
+
+![EKS cluster Overview — store-cluster Active, v1.30](../evidence/screenshots/kubernetes-overview.png)
+
+### Node group `store-nodes`
+
+Configuração do node group gerenciado (mesma da spec acima):
+
+![Node group store-nodes — t3.medium, desired 2](../evidence/screenshots/kubernetes-node-groups.png)
+
+### Instâncias EC2 (worker nodes)
+
+Os 2 nodes EC2 que compõem o cluster, em AZs diferentes (`us-east-1a` e `us-east-1b`):
+
+![EC2 nodes — 2x t3.medium Running](../evidence/screenshots/kubernetes-nodes.png)
+
 ## Provisionamento
 
 ```bash

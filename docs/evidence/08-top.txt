@@ -1,0 +1,9 @@
+=== 8. Top pods (CPU/MEM) ===
+NAME                        CPU(cores)   MEMORY(bytes)   
+account-c84c8bb4f-zhn72     1m           268Mi           
+auth-588d79477f-q8kxw       1m           137Mi           
+exchange-7c7f7999ff-hkml4   2m           141Mi           
+gateway-5ffcd4db4c-z5rx8    1m           182Mi           
+order-74594fc994-lxf6f      1m           307Mi           
+product-6ffd687995-mqhkn    1m           307Mi           
+redis-6fd78f85cd-ncxv2      5m           3Mi             

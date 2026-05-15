@@ -1,0 +1,5 @@
+=== 2. HPA ===
+NAME      REFERENCE            TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+gateway   Deployment/gateway   cpu: 0%/50%   1         5         1          6d2h
+order     Deployment/order     cpu: 0%/50%   1         5         1          6d2h
+product   Deployment/product   cpu: 0%/50%   1         5         1          6d2h

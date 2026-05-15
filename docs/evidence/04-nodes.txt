@@ -1,0 +1,4 @@
+=== 4. Nodes ===
+NAME                             STATUS   ROLES    AGE    VERSION                INTERNAL-IP      EXTERNAL-IP      OS-IMAGE                        KERNEL-VERSION                    CONTAINER-RUNTIME
+ip-192-168-11-195.ec2.internal   Ready    <none>   6d2h   v1.30.14-eks-40737a8   192.168.11.195   3.91.188.121     Amazon Linux 2023.11.20260413   6.1.166-197.305.amzn2023.x86_64   containerd://2.2.1+unknown
+ip-192-168-62-59.ec2.internal    Ready    <none>   6d2h   v1.30.14-eks-40737a8   192.168.62.59    34.236.245.197   Amazon Linux 2023.11.20260413   6.1.166-197.305.amzn2023.x86_64   containerd://2.2.1+unknown

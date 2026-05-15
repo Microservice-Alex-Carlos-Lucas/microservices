@@ -33,3 +33,7 @@ jenkins/config/jenkins/
 
 # MkDocs build output
 site/
+
+# Demo videos (too large for git — host externally if needed)
+docs/evidence/screenshots/*.mov
+docs/evidence/screenshots/*.mp4

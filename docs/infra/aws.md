@@ -35,6 +35,27 @@ para o stage `Deploy to EKS` autenticar.
 
 > Custo agregado durante demo: **~$0.225/h**. Apresentação de 30min ≈ $0.12.
 
+### Network Load Balancer (entry point externo)
+
+NLB provisionado automaticamente pelo `nginx-ingress` controller via Helm
+(`Service type=LoadBalancer` com annotation `service.beta.kubernetes.io/aws-load-balancer-type: nlb`).
+Estado e listeners no console AWS:
+
+![NLB internet-facing, 2 AZs, listeners TCP:80 e TCP:443](../evidence/screenshots/load-balancer.png)
+
+Repara nos **target groups `k8s-ingressn-ingressn-...`** — é a evidência de que o
+NLB foi provisionado pelo Kubernetes (não criado na mão).
+
+### RDS PostgreSQL
+
+Database gerenciado, `db.t3.micro`, single-AZ, Postgres 17.9. Configuração no console:
+
+![RDS store-db Configuration — PostgreSQL 17.9, db.t3.micro, 20 GB](../evidence/screenshots/rds-config.png)
+
+Schema versionado via **Flyway** — `accounts`, `products` e `orders` em schemas
+separados. Evidência das tabelas e migrations aplicadas em
+[`docs/evidence/09-rds-schema.txt`](../evidence/09-rds-schema.txt).
+
 ## Estratégia de custo controlado
 
 `infra/scripts/teardown.sh` roda imediatamente após a apresentação:
