@@ -1,0 +1,11 @@
+=== 6. RDS ===
+-------------------------------------------------------------------
+|                       DescribeDBInstances                       |
++----------+------------------------------------------------------+
+|  class   |  db.t3.micro                                         |
+|  endpoint|  store-db.c5wse42uq3ya.us-east-1.rds.amazonaws.com   |
+|  engine  |  postgres                                            |
+|  id      |  store-db                                            |
+|  publicly|  True                                                |
+|  status  |  available                                           |
++----------+------------------------------------------------------+

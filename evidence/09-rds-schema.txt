@@ -1,0 +1,37 @@
+RDS PostgreSQL — store-db.c5wse42uq3ya.us-east-1.rds.amazonaws.com
+Query executada de dentro do cluster EKS (kubectl run psql).
+
+=== Tabelas por schema (1 schema por microservico) ===
+ schemaname |       tablename
+------------+-----------------------
+ accounts   | accounts
+ accounts   | flyway_schema_history
+ orders     | flyway_schema_history
+ orders     | order
+ orders     | order_item
+ products   | flyway_schema_history
+ products   | product
+(7 rows)
+
+=== Contagem de registros (banco em uso, com dados reais) ===
+     t      | count
+------------+-------
+ accounts   |     2
+ products   |     1
+ orders     |     1
+ order_item |     1
+(4 rows)
+
+=== Migrations aplicadas (Flyway — versionamento de schema) ===
+   svc    |    version     |         description          | success
+----------+----------------+------------------------------+---------
+ accounts | 2026.03.04.001 | create schema                | t
+ accounts | 2026.03.04.002 | create table                 | t
+ accounts | 2026.03.06.001 | create field pass sha256     | t
+ accounts | 2026.05.06.001 | widen id column              | t
+ accounts |                | << Flyway Schema Creation >> | t
+ orders   | 1              | create orders tables         | t
+ orders   |                | << Flyway Schema Creation >> | t
+ products | 1              | create products table        | t
+ products |                | << Flyway Schema Creation >> | t
+(9 rows)

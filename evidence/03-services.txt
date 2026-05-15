@@ -1,0 +1,5 @@
+=== 3. Services + NLB ===
+NAMESPACE       NAME                                 TYPE           CLUSTER-IP       EXTERNAL-IP                                                                     PORT(S)                      AGE
+ingress-nginx   ingress-nginx-controller             LoadBalancer   10.100.3.71      a94cf70eecacd4522b386e8642429b43-b181d58fe02ec51d.elb.us-east-1.amazonaws.com   80:31252/TCP,443:30129/TCP   6d2h
+ingress-nginx   ingress-nginx-controller-admission   ClusterIP      10.100.160.52    <none>                                                                          443/TCP                      6d2h
+ingress-nginx   ingress-nginx-controller-metrics     ClusterIP      10.100.60.43     <none>                                                                          10254/TCP                    6d2h

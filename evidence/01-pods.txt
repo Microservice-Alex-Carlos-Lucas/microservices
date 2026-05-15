@@ -1,0 +1,9 @@
+=== 1. Pods ===
+NAME                        READY   STATUS    RESTARTS   AGE     IP               NODE                             NOMINATED NODE   READINESS GATES
+account-c84c8bb4f-zhn72     1/1     Running   0          5d17h   192.168.40.251   ip-192-168-62-59.ec2.internal    <none>           <none>
+auth-588d79477f-q8kxw       1/1     Running   0          5d18h   192.168.46.115   ip-192-168-62-59.ec2.internal    <none>           <none>
+exchange-7c7f7999ff-hkml4   1/1     Running   0          5d19h   192.168.1.81     ip-192-168-11-195.ec2.internal   <none>           <none>
+gateway-5ffcd4db4c-z5rx8    1/1     Running   0          5d18h   192.168.59.235   ip-192-168-62-59.ec2.internal    <none>           <none>
+order-74594fc994-lxf6f      1/1     Running   0          5d17h   192.168.38.96    ip-192-168-62-59.ec2.internal    <none>           <none>
+product-6ffd687995-mqhkn    1/1     Running   0          5d17h   192.168.45.142   ip-192-168-62-59.ec2.internal    <none>           <none>
+redis-6fd78f85cd-ncxv2      1/1     Running   0          6d2h    192.168.8.19     ip-192-168-11-195.ec2.internal   <none>           <none>
