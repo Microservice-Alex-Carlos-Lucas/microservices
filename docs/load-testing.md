@@ -144,13 +144,3 @@ Link direto: [youtu.be/0wmBCGyHgN8](https://youtu.be/0wmBCGyHgN8) (YouTube unlis
 - Terminal direito (`k6 run gateway-stress.js`): ramp 1 → 200 VUs em 2min,
   hold 1min em 200 VUs, ramp-down 30s. Stats finais no fim (`http_req_failed`,
   `http_req_duration` p95).
-
-Roteiro completo de gravação em [`video-runbook.md`](video-runbook.md) e script
-auxiliar em `scripts/demo-video.sh hpa`.
-
-### Métricas Grafana (opcional — a capturar)
-
-!!! tip "Print Grafana a adicionar"
-    Print do painel do Grafana com `http_server_requests_seconds{quantile="0.95"}`
-    durante a janela do teste, mostrando que p95 não dispara apesar do
-    ramp-up. Salvar em `docs/evidence/screenshots/grafana-p95.png`.
