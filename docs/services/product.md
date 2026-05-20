@@ -1,7 +1,8 @@
 # Product API
 
 **Responsável:** Carlos  
-**Repositório:** [Microservice-Alex-Carlos-Lucas/product-service](https://github.com/Microservice-Alex-Carlos-Lucas/product-service)
+**Repositório:** [Microservice-Alex-Carlos-Lucas/product-service](https://github.com/Microservice-Alex-Carlos-Lucas/product-service)  
+**Documentação individual:** [microservice-alex-carlos-lucas.github.io/product-service](https://microservice-alex-carlos-lucas.github.io/product-service/)
 
 ---
 
