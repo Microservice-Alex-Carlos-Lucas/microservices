@@ -2,7 +2,7 @@
 
 **Responsável:** Alex Chequer  
 **Repositório:** [Microservice-Alex-Carlos-Lucas/exchange](https://github.com/Microservice-Alex-Carlos-Lucas/exchange)  
-**Documentação individual:** [alexchequer.github.io/exchange](https://alexchequer.github.io/exchange)
+**Documentação individual:** [microservice-alex-carlos-lucas.github.io/exchange](https://microservice-alex-carlos-lucas.github.io/exchange)
 
 ---
 
@@ -49,4 +49,4 @@ Rota aberta. Retorna `{"status": "ok"}`.
 2. **Observabilidade** — `prometheus-fastapi-instrumentator` expõe `/metrics` com latência,
    throughput e erros HTTP para Prometheus/Grafana
 
-Detalhes completos: [documentação individual](https://alexchequer.github.io/exchange/bottlenecks/)
+Detalhes completos: [documentação individual](https://microservice-alex-carlos-lucas.github.io/exchange/bottlenecks/)
